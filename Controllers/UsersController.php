@@ -10,6 +10,30 @@ class UsersController{
 		self::$user = new Users();
 	}
 
+	public static function Inscription($username, $password, $confirmPassword, $email){
+		$username = self::secure_input($username);
+
+		if ($username != '' && $password != '' && $confirmPassword != '' && $email != '') {
+			if (self::checkEmailFormat($email) && self::checkEmailExist($email) == false) {
+				if ($password == $confirmPassword) {
+					$hashed = self::hashPassword($password);
+					if (isset($hashed)) {
+						self::$user->addUser($username, $hashed, $email);
+						echo "User created";
+					}
+				} else {
+					echo "Two differents passwords entered";
+				}
+				
+			} else {
+				echo "Incorrect email";
+			}
+		} else {
+			echo "Please fill all the input";
+		}
+
+	}
+
 	public static function getInstance(){
 		if (self::$UsersController == null) {
 			self::$UsersController = new UsersController();
@@ -46,8 +70,10 @@ class UsersController{
         } else {
             return false;
         }
+    }
 
 	public static function checkEmailExist($email){
+		$email = self::secure_input($email);
 		$mail = self::$user->getEmail($email);
 		if (empty($mail)) {
 			return false;
@@ -57,6 +83,7 @@ class UsersController{
 	}
 
 	public static function checkEmailFormat($email){
+		$email = self::secure_input($email);
 		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			return true;
 		} else {
@@ -78,5 +105,8 @@ class UsersController{
 
 	}
 }
+
+
+//$usersController::Inscription('Georges', 'password', 'password', 'jojgmail.com');
 
 ?>
