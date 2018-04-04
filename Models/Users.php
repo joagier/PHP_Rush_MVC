@@ -58,6 +58,23 @@ class Users{
         $prepared_pdo->execute(array($status, $email));
     }
 
+    //get hashed password of a single user
+    public function getHash($email) {
+        $prepared_pdo = $GLOBALS['pdo']->prepare('SELECT password FROM users WHERE email = ?');
+        $prepared_pdo->execute(array($email));
+        $userHash = $prepared_pdo->fetchAll(PDO::FETCH_ASSOC);
+        return $userHash[0]['password'];
+    }
+
+    public function getUserGroup($email) {
+	    $prepare_pdo = $GLOBALS['pdo']->prepare('SELECT user_group FROM users WHERE email = ?');
+        $prepare_pdo->execute(array($email));
+        $result = $prepare_pdo->fetchAll(PDO::FETCH_ASSOC);
+        return $result[0]['user_group'];
+    }
+
 }
+
+
 
 

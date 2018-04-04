@@ -8,5 +8,6 @@ $connect = DB::getInstance();
 $GLOBALS['pdo'] = $connect::connectDB();
 
 $user = new Users();
+
 $usersController = UsersController::getInstance();
 ?>
