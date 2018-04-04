@@ -30,8 +30,9 @@ class Users{
 		$prepare_pdo->execute(array($email));
 	}
 
-	public function editUser($username, $password, $oldEmail, $newEmail, $user_group = 'user', $status = 'clean'){
+	public function editUser($username, $password, $oldEmail, $newEmail, $user_group, $status){
 		$date = date('Y-m-d');
+		echo $date;
 		$prepare_pdo = $GLOBALS['pdo']->prepare("UPDATE users SET username = ?, password = ?, email = ?, edition_date = ?, user_group = ?, status = ? WHERE (email = ?)");
 		$prepare_pdo->execute(array($username, $password, $newEmail, $date, $user_group, $status, $oldEmail ));
 	}
