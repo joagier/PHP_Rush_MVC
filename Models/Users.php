@@ -3,6 +3,20 @@ include_once (dirname(__FILE__) . '/../Config/core.php');
 
 class Users{
 
+	public function getStatus($email){
+			$prepare_pdo = $GLOBALS['pdo']->prepare("SELECT status FROM users WHERE (email = ?)");
+			$prepare_pdo->execute(array($email));
+			$result = $prepare_pdo->fetchAll(PDO::FETCH_ASSOC);
+			return $result[0]['status'];
+	}
+
+	public function getEmail($email){
+		$prepare_pdo = $GLOBALS['pdo']->prepare("SELECT email FROM users WHERE (email = ?)");
+		$prepare_pdo->execute(array($email));
+		$result = $prepare_pdo->fetchAll(PDO::FETCH_ASSOC);
+		return $result;
+	}
+
 
 	public function addUser($username, $password, $email, $user_group = 'user', $status = 'clean'){
 		$date = date('Y-m-d');
