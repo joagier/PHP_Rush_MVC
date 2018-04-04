@@ -1,9 +1,13 @@
 <?php
 
+include_once (dirname(__FILE__) . '/../dispatcher.php');
 
 class AppController {
 
-	
+    protected function redirect($param) {
+
+    }
+
 	public function loadModel($model){
 		if ($model == 'DB') {
 			include_once (dirname(__FILE__) . '/../Config/db.php');
@@ -29,5 +33,5 @@ class AppController {
 	}
 }
 
-
 ?>
+
