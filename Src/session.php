@@ -15,12 +15,14 @@ class Sessions
 		$_SESSION['user_group'] = $data[0]['user_group'];
 		$_SESSION['status'] = $data[0]['status'];
 		
-		var_dump($_SESSION);
+		//var_dump($_SESSION);
 
 	}
 
-	public static function Delete($session){
-
+	public static function Delete(){
+		session_unset();
+		session_destroy();
+		session_reset();
 	}
 
 	public static function Load($session){
