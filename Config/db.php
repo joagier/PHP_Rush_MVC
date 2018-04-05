@@ -17,7 +17,7 @@ Class DB {
 		}
 	}
 
-	public static function connectDB()
+	public function connectDB()
 	{
 	    try {
 	        $pdo = new PDO('mysql:dbname=MVC;host=localhost', 'root', 'Echarcon91!');
