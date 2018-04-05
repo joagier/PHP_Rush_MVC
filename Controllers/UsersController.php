@@ -34,6 +34,58 @@ class UsersController{
 
 	}
 
+	public static function checkUsers() {
+	    $users = self::$user->displayUsers();
+	    foreach ($users as $key => $secureUsers) {
+	        $secureUsers[$key]['username'] = nl2br(htmlspecialchars($users['username']));
+            $secureUsers[$key]['password'] = nl2br(htmlspecialchars($users['password']));
+            $secureUsers[$key]['email'] = nl2br(htmlspecialchars($users['email']));
+        }
+        return $users;
+    }
+
+    public static function viewUsers() {
+	    $users = self::$user->displayUsers();
+	    foreach ($users as $element) {
+	        echo "<table>
+                <tr id='viewUser'>";
+	        echo "<td>" . $element['username'] . "</td>";
+	        echo "<td>" . $element['email'] . "</td>";
+            echo "<td>" . $element['user_group'] . "</td>";
+            echo "<td>" . $element['status'] . "</td>";
+            echo "<td>" . $element['creation_date'] . "</td>";
+            echo "<td>" . $element['edition_date'] . "</td>";
+            echo "</tr>
+            </table>";
+        }
+    }
+
+    public static function checkSingleUser($email) {
+	    $user = self::$user->displaySingleUser($email);
+	    if (empty($user)) {
+	        echo "user doesn't exist";
+        } else {
+            $secureUsers[0]['username'] = nl2br(htmlspecialchars($user[0]['username']));
+            $secureUsers[0]['password'] = nl2br(htmlspecialchars($user[0]['password']));
+            $secureUsers[0]['email'] = nl2br(htmlspecialchars($user[0]['email']));
+            return $user;
+        }
+    }
+
+    public static function viewSingleUser($email) {
+        $user = self::$user->displaySingleUser($email);
+            echo "<table>
+                <tr id='viewUser'>";
+            echo "<td>" . $user[0]['username'] . "</td>";
+            echo "<td>" . $user[0]['email'] . "</td>";
+            echo "<td>" . $user[0]['user_group'] . "</td>";
+            echo "<td>" . $user[0]['status'] . "</td>";
+            echo "<td>" . $user[0]['creation_date'] . "</td>";
+            echo "<td>" . $user[0]['edition_date'] . "</td>";
+            echo "</tr>
+            </table>";
+    }
+
 	public static function getInstance(){
 		if (self::$UsersController == null) {
 			self::$UsersController = new UsersController();
@@ -107,6 +159,6 @@ class UsersController{
 }
 
 
-//$usersController::Inscription('Georges', 'password', 'password', 'jojgmail.com');
+var_dump($usersController::checkSingleUser("jean@gmail.com"));
 
 ?>
