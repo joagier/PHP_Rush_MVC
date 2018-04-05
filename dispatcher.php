@@ -1,12 +1,35 @@
 <?php
+include_once(dirname(__FILE__) . '/Config/core.php');
+echo "dispatcher";
 
-//include_once (dirname(__FILE__) . '/Webroot/index.php');
 
-$url = '';
+		
+	if (isset($_GET['url'])) {
+	    $url = $_GET['url'];
+	} else {
+		//APPEL View Home;
+	}
+	include_once (dirname(__FILE__) . '/Src/router.php');
+	switch ($class) {
+		case 'UsersController':
+			switch ($method) {
+				case 'Inscription':
+					$usersController->Inscription($url[2], $url[4], $url[5], $url[3]);
+					break;
+				
+				default:
+					# code...
+					break;
+			}
+			break;
+		
+		default:
+			# code...
+			break;
+	}
 
-if (isset($_GET['url'])) {
-    $url = $_GET['url'];
-}
 
-var_dump($url);
-echo "c'est le parser";
+
+
+
+
