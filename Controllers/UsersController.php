@@ -10,6 +10,39 @@ class UsersController{
 		self::$user = new Users();
 	}
 
+	public static function Edit($username, $password, $confirmPassword, $oldEmail, $newEmail, $user_group, $status){
+		$username = self::secure_input($username);
+		$user_group = self::secure_input($user_group);
+		$status = self::secure_input($status);
+
+		if ($username != '' && $password != '' && $confirmPassword != '' && $newEmail != '' && $user_group != '' && $status != '') {
+			if (self::checkEmailFormat($newEmail)) {
+				if ($oldEmail != $newEmail) {
+					$check = self::checkEmailExist($newEmail);
+					if ($check == true) {
+						echo "Email already exist";
+						return false;
+					}
+				}
+				if ($password == $confirmPassword) {
+					$hashed = self::hashPassword($password);
+					if (isset($hashed)) {
+						self::$user->editUser($username, $hashed, $oldEmail, $newEmail, $user_group, $status);
+						echo "User edited";
+					}
+				} else {
+					echo "Two differents passwords entered";
+				}
+				
+			} else {
+				echo "Invalid email";
+			}
+		} else {
+			echo "Please fill all the input";
+		}
+
+	}
+
 	public static function Inscription($username, $password, $confirmPassword, $email){
 		$username = self::secure_input($username);
 
@@ -157,8 +190,5 @@ class UsersController{
 
 	}
 }
-
-
-var_dump($usersController::checkSingleUser("jean@gmail.com"));
 
 ?>
