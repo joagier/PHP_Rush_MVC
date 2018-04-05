@@ -33,7 +33,7 @@ class UsersController{
 				if ($password == $confirmPassword) {
 					$hashed = $this->hashPassword($password);
 					if (isset($hashed)) {
-						$this->$user->editUser($username, $hashed, $oldEmail, $newEmail, $user_group, $status);
+						$this->user->editUser($username, $hashed, $oldEmail, $newEmail, $user_group, $status);
 						echo "User edited";
 					}
 				} else {
@@ -59,7 +59,7 @@ class UsersController{
 					if (isset($hashed)) {
 						$this->user->addUser($username, $hashed, $email);
 						echo "User created";
-						header('Location: login.php');
+						header('Location: accueil.php');
 					}
 				} else {
 					echo "Two differents passwords entered";
