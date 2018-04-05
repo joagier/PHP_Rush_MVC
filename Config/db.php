@@ -20,7 +20,7 @@ Class DB {
 	public static function connectDB()
 	{
 	    try {
-	        $pdo = new PDO('mysql:dbname=MVC;host=localhost', 'root', 'Echarcon91!');
+	        $pdo = new PDO('mysql:dbname=MVC;host=localhost', 'root', 'toto');
 	        return $pdo;
 	    } catch (PDOException $e) {
 	        echo "PDO ERROR: " . $e->getMessage() . "\n";

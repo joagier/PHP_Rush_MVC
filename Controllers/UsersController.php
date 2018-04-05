@@ -4,30 +4,36 @@ include_once (dirname(__FILE__) . '/../Config/core.php');
 class UsersController{
 
 	private static $UsersController = null;
-	private static $user = null;
+	private $user = null;
 
 	private function __construct(){
-		self::$user = new Users();
+		$this->user = new Users();
 	}
 
-	public static function Edit($username, $password, $confirmPassword, $oldEmail, $newEmail, $user_group, $status){
-		$username = self::secure_input($username);
-		$user_group = self::secure_input($user_group);
-		$status = self::secure_input($status);
+	public function Test($first, $second){
+		echo $first;
+		echo $second;
+		include_once(dirname(__FILE__) . '/../Vendors/index.php');
+	}
+
+	public function Edit($username, $password, $confirmPassword, $oldEmail, $newEmail, $user_group, $status){
+		$username = $this->secure_input($username);
+		$user_group = $this->secure_input($user_group);
+		$status = $this->secure_input($status);
 
 		if ($username != '' && $password != '' && $confirmPassword != '' && $newEmail != '' && $user_group != '' && $status != '') {
-			if (self::checkEmailFormat($newEmail)) {
+			if ($this->checkEmailFormat($newEmail)) {
 				if ($oldEmail != $newEmail) {
-					$check = self::checkEmailExist($newEmail);
+					$check = $this->checkEmailExist($newEmail);
 					if ($check == true) {
 						echo "Email already exist";
 						return false;
 					}
 				}
 				if ($password == $confirmPassword) {
-					$hashed = self::hashPassword($password);
+					$hashed = $this->hashPassword($password);
 					if (isset($hashed)) {
-						self::$user->editUser($username, $hashed, $oldEmail, $newEmail, $user_group, $status);
+						$this->$user->editUser($username, $hashed, $oldEmail, $newEmail, $user_group, $status);
 						echo "User edited";
 					}
 				} else {
@@ -43,16 +49,17 @@ class UsersController{
 
 	}
 
-	public static function Inscription($username, $password, $confirmPassword, $email){
-		$username = self::secure_input($username);
+	public function Inscription($username, $password, $confirmPassword, $email){
+		$username = $this->secure_input($username);
 
 		if ($username != '' && $password != '' && $confirmPassword != '' && $email != '') {
-			if (self::checkEmailFormat($email) && self::checkEmailExist($email) == false) {
+			if ($this->checkEmailFormat($email) && $this->checkEmailExist($email) == false) {
 				if ($password == $confirmPassword) {
-					$hashed = self::hashPassword($password);
+					$hashed = $this->hashPassword($password);
 					if (isset($hashed)) {
-						self::$user->addUser($username, $hashed, $email);
+						$this->user->addUser($username, $hashed, $email);
 						echo "User created";
+						header('Location: login.php');
 					}
 				} else {
 					echo "Two differents passwords entered";
@@ -67,8 +74,8 @@ class UsersController{
 
 	}
 
-	public static function checkUsers() {
-	    $users = self::$user->displayUsers();
+	public function checkUsers() {
+	    $users = $this->user->displayUsers();
 	    foreach ($users as $key => $secureUsers) {
 	        $secureUsers[$key]['username'] = nl2br(htmlspecialchars($users['username']));
             $secureUsers[$key]['password'] = nl2br(htmlspecialchars($users['password']));
@@ -77,8 +84,8 @@ class UsersController{
         return $users;
     }
 
-    public static function viewUsers() {
-	    $users = self::$user->displayUsers();
+    public function viewUsers() {
+	    $users = $this->user->displayUsers();
 	    foreach ($users as $element) {
 	        echo "<table>
                 <tr id='viewUser'>";
@@ -93,8 +100,8 @@ class UsersController{
         }
     }
 
-    public static function checkSingleUser($email) {
-	    $user = self::$user->displaySingleUser($email);
+    public function checkSingleUser($email) {
+	    $user = $this->user->displaySingleUser($email);
 	    if (empty($user)) {
 	        echo "user doesn't exist";
         } else {
@@ -105,8 +112,8 @@ class UsersController{
         }
     }
 
-    public static function viewSingleUser($email) {
-        $user = self::$user->displaySingleUser($email);
+    public function viewSingleUser($email) {
+        $user = $this->user->displaySingleUser($email);
             echo "<table>
                 <tr id='viewUser'>";
             echo "<td>" . $user[0]['username'] . "</td>";
@@ -128,28 +135,28 @@ class UsersController{
 		}
 	}
   
-  public static function checkUserGroup($email) {
-        return $groupUser = self::$user->getUserGroup($email);
+  public function checkUserGroup($email) {
+        return $groupUser = $this->user->getUserGroup($email);
     }
 
     //format the user inputs
-    public static function secure_input($data) {
+    public function secure_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
     }
     //hash the password before storing it on DB or use it for check
-    public static function hashPassword($password) {
-        $password = self::secure_input($password);
+    public function hashPassword($password) {
+        $password = $this->secure_input($password);
         $hash = password_hash($password, PASSWORD_DEFAULT);
         return $hash;
     }
 
     //verify password -> return true if the password is correct/false if it is incorrect
-    public static function checkPassword($password, $email) {
-        $password = self::secure_input($password);
-        $hash = self::$user->getHash($email);
+    public function checkPassword($password, $email) {
+        $password = $this->secure_input($password);
+        $hash = $this->user->getHash($email);
         if (password_verify($password, $hash)) {
             return true;
         } else {
@@ -157,9 +164,9 @@ class UsersController{
         }
     }
 
-	public static function checkEmailExist($email){
-		$email = self::secure_input($email);
-		$mail = self::$user->getEmail($email);
+	public function checkEmailExist($email){
+		$email = $this->secure_input($email);
+		$mail = $this->user->getEmail($email);
 		if (empty($mail)) {
 			return false;
 		} else {
@@ -167,8 +174,8 @@ class UsersController{
 		}
 	}
 
-	public static function checkEmailFormat($email){
-		$email = self::secure_input($email);
+	public function checkEmailFormat($email){
+		$email = $this->secure_input($email);
 		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			return true;
 		} else {
@@ -176,9 +183,9 @@ class UsersController{
 		}
 	}
 
-	public static function checkStatus($email){
-		if (self::checkEmailExist($email)) {
-				$status = self::$user->getStatus($email);
+	public function checkStatus($email){
+		if ($this->checkEmailExist($email)) {
+				$status = $this->user->getStatus($email);
 				if ($status == 'clean') {
 					return true;
 				} else {
