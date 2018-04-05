@@ -33,7 +33,7 @@ class UsersController{
 				if ($password == $confirmPassword) {
 					$hashed = $this->hashPassword($password);
 					if (isset($hashed)) {
-						$this->$user->editUser($username, $hashed, $oldEmail, $newEmail, $user_group, $status);
+						$this->user->editUser($username, $hashed, $oldEmail, $newEmail, $user_group, $status);
 						echo "User edited";
 					}
 				} else {
@@ -73,6 +73,25 @@ class UsersController{
 		}
 
 	}
+
+	public function Login($email, $password) {
+        $email = $this->secure_input($email);
+        $password = $this->secure_input($password);
+        if ($email != '' && $password != '') {
+            if ($this->checkEmailFormat($email) && $this->checkEmailExist($email) == true) {
+                if ($this->checkPassword($password, $email)) {
+                    header('Location: home.php');
+                } else {
+                    echo "wrong password";
+                }
+            }else {
+                echo "email doesn't exist";
+            }
+
+        } else {
+            echo "Please fill all the input";
+        }
+    }
 
 	public function checkUsers() {
 	    $users = $this->user->displayUsers();
@@ -155,7 +174,6 @@ class UsersController{
 
     //verify password -> return true if the password is correct/false if it is incorrect
     public function checkPassword($password, $email) {
-        $password = $this->secure_input($password);
         $hash = $this->user->getHash($email);
         if (password_verify($password, $hash)) {
             return true;
@@ -196,6 +214,12 @@ class UsersController{
 		}
 
 	}
+
+	public function viewLogin() {
+	    include_once (dirname(__FILE__) . '/../Views/Layouts/login.php');
+    }
+
 }
+
 
 ?>
