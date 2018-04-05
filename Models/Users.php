@@ -45,7 +45,7 @@ class Users{
     }
 
     //get single user data
-    public function displayUser($email) {
+    public function displaySingleUser($email) {
         $prepared_pdo = $GLOBALS['pdo']->prepare('SELECT * FROM users WHERE email = ?');
         $prepared_pdo->execute(array($email));
         $userInfo = $prepared_pdo->fetchAll(PDO::FETCH_ASSOC);
