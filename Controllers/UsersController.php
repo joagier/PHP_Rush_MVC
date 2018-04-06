@@ -10,10 +10,31 @@ class UsersController{
 		$this->user = new Users();
 	}
 
-	public function Test($first, $second){
-		echo $first;
-		echo $second;
-		include_once(dirname(__FILE__) . '/../Vendors/index.php');
+	public function Edit2($username, $password, $oldEmail, $newEmail, $user_group, $status){
+		$username = $this->secure_input($username);
+		$user_group = $this->secure_input($user_group);
+		$status = $this->secure_input($status);
+
+		if ($username != '' && $newEmail != '' && $user_group != '' && $status != '') {
+			if ($this->checkEmailFormat($newEmail)) {
+				if ($oldEmail != $newEmail) {
+					$check = $this->checkEmailExist($newEmail);
+					if ($check == true) {
+						echo "Email already exist";
+						return false;
+					}
+				}
+				$this->user->editUser2($username, $oldEmail, $newEmail, $user_group, $status);
+				$this->viewAdmin();
+				echo "User edited";
+				
+			} else {
+				echo "Invalid email";
+			}
+		} else {
+			echo "Please fill all the input";
+		}
+
 	}
 
 	public function Edit($username, $password, $confirmPassword, $oldEmail, $newEmail, $user_group, $status){
@@ -111,18 +132,20 @@ class UsersController{
 
     public function viewUsers() {
 	    $users = $this->user->displayUsers();
+	    echo "<table id='allUsers'>";
 	    foreach ($users as $element) {
-	        echo "<table>
-                <tr id='viewUser'>";
+	        echo "<tr>";
 	        echo "<td>" . $element['username'] . "</td>";
 	        echo "<td>" . $element['email'] . "</td>";
             echo "<td>" . $element['user_group'] . "</td>";
             echo "<td>" . $element['status'] . "</td>";
             echo "<td>" . $element['creation_date'] . "</td>";
             echo "<td>" . $element['edition_date'] . "</td>";
-            echo "</tr>
-            </table>";
+            echo "<td> <a href='index.php?url=UsersController/viewEdit/" . $element['username'] . "/" . $element['email'] . "/" . $element['user_group'] . "/" . $element['status'] . "/" . $element['password'] ."/'> <button class='edit' id='viewUser/" . $element['id'] ."/'>Edit</button></a></td>";
+            echo "</tr>";
+
         }
+        echo '</table>';
     }
 
     public function checkSingleUser($email) {
@@ -222,8 +245,16 @@ class UsersController{
 	}
 
 	public function delete($email) {
-	    $this->user->deleteUser($email);
-	    echo "User deleted";
+		if ($email == $_SESSION['url3']) {
+			$this->user->deleteUser($email);
+			$this->viewAdmin();
+		} else {
+			$this->user->deleteUser($email);
+		    echo "User deleted";
+		    Sessions::Delete();
+		    $this->viewLogin();
+		}
+	    
     }
 
 	public function viewLogin() {
@@ -235,7 +266,7 @@ class UsersController{
     }
 
     public function viewHome() {
-	    if (Sessions::Read("username") != null) {
+	    if (Sessions::Read("username") != null && Sessions::Read("status") == 'clean') {
         include_once (dirname(__FILE__) . '/../Views/Layouts/home.tpl');
     } else {
             include_once (dirname(__FILE__) . '/../Views/Layouts/login.tpl');
@@ -248,9 +279,28 @@ class UsersController{
     }
 
     public function viewAdmin(){
-    	include_once (dirname(__FILE__) . '/../Views/Layouts/group_admin.php');
+    	if (Sessions::Read("username") != null) {
+    		include_once (dirname(__FILE__) . '/../Views/Layouts/group_admin.php');
+    	} else {
+    		$this->viewLogin();
+    	}
+    	
+    }
+
+    public function viewEdit($url){
+    	if (Sessions::Read("username") != null) {
+    		$_SESSION['url2'] = $url[2];
+    		$_SESSION['url3'] = $url[3];
+    		$_SESSION['url4'] = $url[4];
+    		$_SESSION['url5'] = $url[5];
+    		include_once (dirname(__FILE__) . '/../Views/Layouts/Edit.php');
+    	} else {
+    		$this->viewLogin();
+    	}
+    	
     }
 
 }
+
 
 ?>

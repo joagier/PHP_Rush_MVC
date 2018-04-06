@@ -10,6 +10,7 @@ class Sessions
 
 	public static function Write($data){
 		
+		$_SESSION['id'] = $data[0]['id'];
 		$_SESSION['username'] = $data[0]['username'];
 		$_SESSION['email'] = $data[0]['email'];
 		$_SESSION['password'] = $data[0]['password'];

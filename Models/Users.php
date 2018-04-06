@@ -37,6 +37,13 @@ class Users{
 		$prepare_pdo->execute(array($username, $password, $newEmail, $date, $user_group, $status, $oldEmail ));
 	}
 
+	public function editUser2($username, $oldEmail, $newEmail, $user_group, $status){
+		$date = date('Y-m-d');
+		echo $date;
+		$prepare_pdo = $GLOBALS['pdo']->prepare("UPDATE users SET username = ?, email = ?, edition_date = ?, user_group = ?, status = ? WHERE (email = ?)");
+		$prepare_pdo->execute(array($username, $newEmail, $date, $user_group, $status, $oldEmail ));
+	}
+
     //get all users data
     public function displayUsers() {
         $prepared_pdo = $GLOBALS['pdo']->prepare('SELECT * FROM users');

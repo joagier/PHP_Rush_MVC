@@ -8,6 +8,10 @@
 </head>
 
 <body>
+<?php 
+include_once (dirname(__FILE__) . '/headerHome.tpl'); 
+include_once (dirname(__FILE__) . '/../../Config/core.php');
+?>
 
 
 <?php
