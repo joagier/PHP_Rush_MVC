@@ -34,6 +34,9 @@ class UsersController{
 					$hashed = $this->hashPassword($password);
 					if (isset($hashed)) {
 						$this->user->editUser($username, $hashed, $oldEmail, $newEmail, $user_group, $status);
+						$data = $this->checkSingleUser($newEmail);
+                		Sessions::Write($data);
+						$this->viewAdmin();
 						echo "User edited";
 					}
 				} else {
@@ -59,7 +62,7 @@ class UsersController{
 					if (isset($hashed)) {
 						$this->user->addUser($username, $hashed, $email);
 						echo "User created";
-						//header('Location: accueil.php');
+						header('Location: index.php');
 					}
 				} else {
 					echo "Two differents passwords entered";
@@ -232,6 +235,11 @@ class UsersController{
 
     public function logout() {
 	    Sessions::Delete();
+	    $this->viewLogin();
+    }
+
+    public function viewAdmin(){
+    	include_once (dirname(__FILE__) . '/../Views/Layouts/group_admin.php');
     }
 
 }

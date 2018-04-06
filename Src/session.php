@@ -12,6 +12,7 @@ class Sessions
 		
 		$_SESSION['username'] = $data[0]['username'];
 		$_SESSION['email'] = $data[0]['email'];
+		$_SESSION['password'] = $data[0]['password'];
 		$_SESSION['user_group'] = $data[0]['user_group'];
 		$_SESSION['status'] = $data[0]['status'];
 		
