@@ -82,6 +82,8 @@ class UsersController{
                 if ($this->checkPassword($password, $email)) {
                 	$data = $this->checkSingleUser($email);
                 	Sessions::Write($data);
+                  header('Location: ?url=UsersController/viewHome');
+
                 } else {
                     echo "wrong password";
                 }
@@ -217,10 +219,19 @@ class UsersController{
 	}
 
 	public function viewLogin() {
-	    include_once (dirname(__FILE__) . '/../Views/Layouts/login.php');
+	    include_once (dirname(__FILE__) . '/../Views/Layouts/login.tpl');
+    }
+
+    public function viewSubscription() {
+	    echo "tu es là";
+        include_once (dirname(__FILE__) . '/../Views/Layouts/inscription.tpl');
+    }
+
+    public function viewHome() {
+        echo "tu es là";
+        include_once (dirname(__FILE__) . '/../Views/Layouts/home.tpl');
     }
 
 }
-//Inscription($username, $password, $confirmPassword, $email)
-$usersController->Login('tontonjerome@gmail.com', 'test');
+
 ?>
