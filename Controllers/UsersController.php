@@ -218,6 +218,11 @@ class UsersController{
 
 	}
 
+	public function delete($email) {
+	    $this->user->deleteUser($email);
+	    echo "User deleted";
+    }
+
 	public function viewLogin() {
 	    include_once (dirname(__FILE__) . '/../Views/Layouts/login.tpl');
     }
@@ -227,13 +232,20 @@ class UsersController{
     }
 
     public function viewHome() {
+	    if (Sessions::Read("username") != null) {
         include_once (dirname(__FILE__) . '/../Views/Layouts/home.tpl');
+    } else {
+            include_once (dirname(__FILE__) . '/../Views/Layouts/login.tpl');
+        }
     }
 
     public function logout() {
 	    Sessions::Delete();
+        include_once (dirname(__FILE__) . '/../Views/Layouts/login.tpl');
     }
 
 }
+
+//$usersController->Inscription("testdelete", "coding", "coding", "test@gmail.com");
 
 ?>

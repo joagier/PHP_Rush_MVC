@@ -12,10 +12,6 @@ echo "dispatcher";
 	}
 
 
-	/*if(!isset($_SESSION['login'])) {
-	    $usersController->viewLogin();
-    }*/
-
 	include_once (dirname(__FILE__) . '/Src/router.php');
 	switch ($class) {
 		case 'UsersController':
@@ -37,6 +33,10 @@ echo "dispatcher";
                     break;
                 case 'logout':
                     $usersController->logout();
+                    break;
+                case 'deleteUser':
+                    echo "coucou";
+                        $usersController->delete($_SESSION['email']);
                     break;
 				default:
 					# code...
