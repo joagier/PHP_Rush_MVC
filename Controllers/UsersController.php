@@ -59,7 +59,7 @@ class UsersController{
 					if (isset($hashed)) {
 						$this->user->addUser($username, $hashed, $email);
 						echo "User created";
-						header('Location: login.php');
+						header('Location: accueil.php');
 					}
 				} else {
 					echo "Two differents passwords entered";
