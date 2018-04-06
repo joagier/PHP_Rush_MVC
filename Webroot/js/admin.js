@@ -5,6 +5,17 @@ $(document).ready(function(){
 
 	})
 
+	$(".SHOW").hide();
+	$(".editArticle").click(function(){
+		$(".SHOW").toggle();
+	})
+
+
+	$("#createForm").hide();
+	$("#createUser").click(function(){
+		$("#createForm").toggle();
+	})
+
 	$("#allUsers").hide();
 	$("#displayUsers").click(function(){
 		$("#allUsers").toggle();
