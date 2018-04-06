@@ -43,6 +43,18 @@ echo "dispatcher";
                 case 'Edit':
                     $usersController->Edit($url[2], $url[3], $url[4], $url[5], $url[6], $url[7], $url[8]);
                     break;
+                case 'delete':
+                    $usersController->delete($_SESSION['email']);
+                    break;
+                case 'deletebis':
+                    $usersController->delete($_SESSION['url3']);
+                    break;
+                case 'viewEdit':
+                    $usersController->viewEdit($url);
+                    break;
+                case 'Edit2':
+                    $usersController->Edit2($url[2], $url[3], $url[4], $url[5], $url[6], $url[7]);
+                    break;
 				default:
 					# code...
 					break;
