@@ -80,7 +80,7 @@ class UsersController{
         if ($email != '' && $password != '') {
             if ($this->checkEmailFormat($email) && $this->checkEmailExist($email) == true) {
                 if ($this->checkPassword($password, $email)) {
-                    header('Location: home.php');
+                    header('Location: ?url=UsersController/viewHome');
                 } else {
                     echo "wrong password";
                 }
@@ -216,7 +216,17 @@ class UsersController{
 	}
 
 	public function viewLogin() {
-	    include_once (dirname(__FILE__) . '/../Views/Layouts/login.php');
+	    include_once (dirname(__FILE__) . '/../Views/Layouts/login.tpl');
+    }
+
+    public function viewSubscription() {
+	    echo "tu es là";
+        include_once (dirname(__FILE__) . '/../Views/Layouts/inscription.tpl');
+    }
+
+    public function viewHome() {
+        echo "tu es là";
+        include_once (dirname(__FILE__) . '/../Views/Layouts/home.tpl');
     }
 
 }

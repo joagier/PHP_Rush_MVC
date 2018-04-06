@@ -10,9 +10,10 @@ echo "dispatcher";
 		//APPEL View Home;
 	}
 
-	if(!isset($_SESSION['login'])) {
+
+	/*if(!isset($_SESSION['login'])) {
 	    $usersController->viewLogin();
-    }
+    }*/
 
 	include_once (dirname(__FILE__) . '/Src/router.php');
 	switch ($class) {
@@ -24,6 +25,15 @@ echo "dispatcher";
                 case 'Login':
                     $usersController->Login($url[2], $url[3]);
                     break;
+                case 'viewLogin':
+                    $usersController->viewLogin();
+                    break;
+                case 'viewSubscription':
+                    $usersController->viewSubscription();
+                    break;
+                case 'viewHome':
+                    $usersController->viewHome();
+                    break;
 				default:
 					# code...
 					break;
@@ -31,7 +41,7 @@ echo "dispatcher";
 			break;
 		
 		default:
-			# code...
+            $usersController->viewLogin();
 			break;
 	}
 

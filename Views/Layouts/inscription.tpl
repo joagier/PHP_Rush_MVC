@@ -4,6 +4,9 @@
 	<title>Inscription</title>
 </head>
 <body>
+
+<?php include_once (dirname(__FILE__) . '/headerLogin.tpl'); ?>
+
 	<form method="get" action="<?php
 	if(isset($_GET['submit'])){
 		header('Location: inscription.tpl?url=UsersController/Inscription/' . $_GET['username'] . '/' . $_GET['email'] . '/' . $_GET['password'] . '/' . $_GET['confirmPassword']);
@@ -16,6 +19,5 @@
 		<p><label for="confirmPassword"> Confirm password </label><input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm"> </p>
 		<input type="submit" name="submit">
 	</form>
-	<a href=""><button>Login</button></a>
 </body>
 </html>
