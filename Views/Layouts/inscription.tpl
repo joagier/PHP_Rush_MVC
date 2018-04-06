@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<?php include_once (dirname(__FILE__) . '/headerLogin.tpl'); ?>
+<?php include_once (dirname(__FILE__) . '/headerLogin.php'); ?>
 
 	<form method="post" action="<?php
 	if(isset($_POST['submit_inscription'])){

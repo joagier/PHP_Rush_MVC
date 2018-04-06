@@ -34,7 +34,9 @@ echo "dispatcher";
                 case 'logout':
                     $usersController->logout();
                     break;
-
+                case 'deleteUser':
+                    $usersController->delete($_SESSION['email']);
+                    break;
                 case 'viewAdmin':
                     $usersController->viewAdmin();
                     break;
