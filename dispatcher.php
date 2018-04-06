@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once(dirname(__FILE__) . '/Config/core.php');
 echo "dispatcher";
 
@@ -33,6 +34,9 @@ echo "dispatcher";
                     break;
                 case 'viewHome':
                     $usersController->viewHome();
+                    break;
+                case 'logout':
+                    $usersController->logout();
                     break;
 				default:
 					# code...

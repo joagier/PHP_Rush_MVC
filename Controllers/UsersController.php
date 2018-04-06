@@ -223,13 +223,15 @@ class UsersController{
     }
 
     public function viewSubscription() {
-	    echo "tu es là";
         include_once (dirname(__FILE__) . '/../Views/Layouts/inscription.tpl');
     }
 
     public function viewHome() {
-        echo "tu es là";
         include_once (dirname(__FILE__) . '/../Views/Layouts/home.tpl');
+    }
+
+    public function logout() {
+	    Sessions::Delete();
     }
 
 }

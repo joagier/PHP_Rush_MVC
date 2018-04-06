@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start();
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -10,7 +12,7 @@
 <?php include_once (dirname(__FILE__) . '/headerHome.tpl'); ?>
 
 <p>Salut ! Tu es sur la Homepage !</p>
-<button type="button" name="logout" id="logout">Logout</button>
+<a href="?url=UsersController/logout"><button type="button" name="logout" id="logout">Logout</button></a>
 
 </form>
 </body>
