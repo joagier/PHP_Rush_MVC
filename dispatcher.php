@@ -35,8 +35,13 @@ echo "dispatcher";
                     $usersController->logout();
                     break;
                 case 'deleteUser':
-                    echo "coucou";
-                        $usersController->delete($_SESSION['email']);
+                    $usersController->delete($_SESSION['email']);
+                    break;
+                case 'viewAdmin':
+                    $usersController->viewAdmin();
+                    break;
+                case 'Edit':
+                    $usersController->Edit($url[2], $url[3], $url[4], $url[5], $url[6], $url[7], $url[8]);
                     break;
 				default:
 					# code...
