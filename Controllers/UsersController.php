@@ -59,7 +59,7 @@ class UsersController{
 					if (isset($hashed)) {
 						$this->user->addUser($username, $hashed, $email);
 						echo "User created";
-						header('Location: accueil.php');
+						//header('Location: accueil.php');
 					}
 				} else {
 					echo "Two differents passwords entered";
@@ -80,7 +80,10 @@ class UsersController{
         if ($email != '' && $password != '') {
             if ($this->checkEmailFormat($email) && $this->checkEmailExist($email) == true) {
                 if ($this->checkPassword($password, $email)) {
-                    header('Location: ?url=UsersController/viewHome');
+                	$data = $this->checkSingleUser($email);
+                	Sessions::Write($data);
+                  header('Location: ?url=UsersController/viewHome');
+
                 } else {
                     echo "wrong password";
                 }
@@ -230,6 +233,5 @@ class UsersController{
     }
 
 }
-
 
 ?>
