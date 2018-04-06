@@ -63,23 +63,23 @@ echo "dispatcher";
 
 		case 'ArticlesController':
 			switch ($method) {
-       case 'viewSingleArticle':
-          $articlesController->viewSingleArticle($url[2]);
-          break;
-        case 'addComment':
-          $articlesController->addComment($url[2], $_SESSION['id'], $url[3]);
-          break;
+       		case 'viewSingleArticle':
+          	$articlesController->viewSingleArticle($url[2]);
+          	break;
+        	case 'addComment':
+          	$articlesController->addComment($url[2], $_SESSION['id'], $url[3]);
+          	break;
 				case 'addArticleController':
-					$articleController->addArticleController($url[2], $url[3], $url[4], $url[5]);
+					$articlesController->addArticleController($url[2], $url[3], $url[4], $url[5]);
 					break;
 				case 'viewArticles':
-					$articleController->viewArticles($url[2]);
+					$articlesController->viewArticles($url[2]);
 					break;
 				case 'viewEditArticle':
-					$articleController->viewEditArticle($url);
+					$articlesController->viewEditArticle($url);
 					break;
 				case 'editArticleController':
-					$articleController->editArticleController($url[2], $url[3], $url[4], $url[5]);
+					$articlesController->editArticleController($url[2], $url[3], $url[4], $url[5]);
 					break;
 				default:
 					# code...
