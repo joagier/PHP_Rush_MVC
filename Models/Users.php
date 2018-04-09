@@ -60,6 +60,13 @@ class Users{
         return $userInfo;
     }
 
+    public function displaySingleUserByID($id) {
+        $prepared_pdo = $GLOBALS['pdo']->prepare('SELECT * FROM users WHERE id = ?');
+        $prepared_pdo->execute(array($id));
+        $userInfo = $prepared_pdo->fetchAll(PDO::FETCH_ASSOC);
+        return $userInfo;
+    }
+
     //edit user status to banned/not banned
     public function editStatus($email, $status) {
         $prepared_pdo = $GLOBALS['pdo']->prepare('UPDATE users SET status = ? WHERE email = ?');
