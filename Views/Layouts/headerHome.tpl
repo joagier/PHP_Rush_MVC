@@ -4,6 +4,7 @@
         <ul>
             <li><a href="?url=UsersController/viewHome">Home</a></li>
             <li><a href="?url=UsersController/viewArticles">Articles</a></li>
+            <li><a href="?url=UsersController/logout">Logout</a></li>
         </ul>
     </menu>
 </header>
