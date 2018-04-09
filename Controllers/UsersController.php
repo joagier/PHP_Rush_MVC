@@ -83,7 +83,12 @@ class UsersController{
 					if (isset($hashed)) {
 						$this->user->addUser($username, $hashed, $email);
 						echo "User created";
-						header('Location: index.php');
+						if ($_SESSION['user_group'] == 'admin') {
+							$this->viewAdmin();
+						} else {
+							header('Location: index.php');
+						}
+						
 					}
 				} else {
 					echo "Two differents passwords entered";

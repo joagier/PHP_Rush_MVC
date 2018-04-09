@@ -13,8 +13,10 @@ $connect = DB::getInstance();
 $GLOBALS['pdo'] = $connect->connectDB();
 
 $user = new Users();
+$article = new Article();
 
 $usersController = UsersController::getInstance();
+$articleController = ArticleControllers::getInstance();
 $session = new Sessions();
 
 $articlesController = ArticlesController::getInstance();

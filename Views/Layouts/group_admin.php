@@ -1,13 +1,26 @@
 <?php 
 session_start();
 include_once (dirname(__FILE__) . '/../../Config/core.php');
-$usersController = UsersController::getInstance(); 
+$usersController = UsersController::getInstance();
+$articleController = ArticleControllers::getInstance(); 
 
 ?>
 
 <?php ob_start(); ?>
 <h3> Create user</h3>
 <button id="createUser">Create user</button>
+	<form id="createForm" method="post" action="<?php
+	if(isset($_POST['submit_inscription'])){
+		header('Location: index.php?url=UsersController/Inscription/' . $_POST['username'] . '/' . $_POST['email'] . '/' . $_POST['password'] . '/' . $_POST['confirmPassword']);
+	}
+	
+	 ?>">
+		<p><label for="username"> Name </label><input type="text" name="username" id="username" placeholder="Name" > </p>
+		<p><label for="email"> Email </label><input type="text" name="email" id="email" placeholder="email"> </p>
+		<p><label for="password"> Password </label> <input type="password" name="password" id="password" placeholder="password"> </p>
+		<p><label for="confirmPassword"> Confirm password </label><input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm"> </p>
+		<input type="submit" name="submit_inscription">
+	</form>
 
 <h3> Display users</h3>
 <?php 
@@ -20,14 +33,17 @@ $usersController->viewUsers();
 <p> Modifié, ban, status</p>
 
 <h3> Edit Articles </h3>
-<button id="editArticle">Edit article</button>
+<?php 
+$articleController->viewArticles('creation_date');
+?>
+<button class="editArticle">Edit article</button>
 
 <h3> Write articles </h3>
 <button id="writeArticle">Write article</button>
 <form id="writerForm" method="post" action="
 <?php
 	if(isset($_POST['submit_newArticle'])){
-		header('Location: index.php?url=UsersController/#/' . $_POST['title'] . '/' . $_POST['content'] . '/' . $_POST['tag'] . '/' . $_SESSION['id']);
+		header('Location: index.php?url=ArticlesController/addArticleController/' . $_POST['title'] . '/' . $_SESSION['id'] . '/' . $_POST['content'] . '/' . $_POST['tag']);
 	}
 	
 ?>
@@ -67,7 +83,7 @@ $usersController->viewUsers();
 <form id="writerForm" method="post" action="
 <?php
 	if(isset($_POST['submit_newArticle'])){
-		header('Location: index.php?url=UsersController/#/' . $_POST['title'] . '/' . $_POST['content'] . '/' . $_POST['tag'] . '/' . $_SESSION['id']);
+		header('Location: index.php?url=ArticlesController/addArticleController/' . $_POST['title'] . '/' . $_SESSION['id'] . '/' . $_POST['content'] . '/' . $_POST['tag']);
 	}
 	
 ?>
@@ -79,14 +95,10 @@ $usersController->viewUsers();
 </form>
 
 <h3> Edit your articles</h3>
+<?php
+$articleController->viewArticlesAuthor($_SESSION['id']);
+?>
 <button id="editArticle2">Edit article</button>
-<div id="articles">
-	<ul>
-		<li>1er article</li>
-		<li>2eme article</li>
-		<li>3eme article</li>
-	</ul>
-</div>
 
 <h3> Edit your profile </h3>
 <button id="editProfile2">Edit your profile</button>

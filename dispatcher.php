@@ -60,16 +60,32 @@ echo "dispatcher";
 					break;
 			}
 			break;
-        case 'ArticlesController':
-            switch ($method) {
-                case 'viewSingleArticle':
-                    $articlesController->viewSingleArticle($url[2]);
-                    break;
-                case 'addComment':
-                    $articlesController->addComment($url[2], $_SESSION['id'], $url[3]);
-                    break;
-            }
-            break;
+
+		case 'ArticlesController':
+			switch ($method) {
+       case 'viewSingleArticle':
+          $articlesController->viewSingleArticle($url[2]);
+          break;
+        case 'addComment':
+          $articlesController->addComment($url[2], $_SESSION['id'], $url[3]);
+          break;
+				case 'addArticleController':
+					$articleController->addArticleController($url[2], $url[3], $url[4], $url[5]);
+					break;
+				case 'viewArticles':
+					$articleController->viewArticles($url[2]);
+					break;
+				case 'viewEditArticle':
+					$articleController->viewEditArticle($url);
+					break;
+				case 'editArticleController':
+					$articleController->editArticleController($url[2], $url[3], $url[4], $url[5]);
+					break;
+				default:
+					# code...
+					break;
+			}
+			break;
 		default:
             $usersController->viewLogin();
 			break;

@@ -12,15 +12,16 @@ class Article
     }
 
     public function addArticle($title, $author, $content, $tag){
+        echo "Dans le model";
         $date = date('Y-m-d H:i:s');
         $prepare_pdo = $GLOBALS['pdo']->prepare("INSERT INTO articles (title, author, content, creation_date, edition_date, tag) VALUES (?, ?, ?, ?, ?, ?)");
         $prepare_pdo->execute(array($title, $author, $content, $date, $date, $tag));
     }
 
-    public function editArticle($id, $title, $author, $content, $tag){
+    public function editArticle($id, $title, $content, $tag){
         $date = date('Y-m-d H:i:s');
-        $prepare_pdo = $GLOBALS['pdo']->prepare("UPDATE articles SET title = ?, author = ?, content = ?, edition_date = ?, tag = ? WHERE (id = ?)");
-        $prepare_pdo->execute(array($title, $author, $content, $date, $tag, $id));
+        $prepare_pdo = $GLOBALS['pdo']->prepare("UPDATE articles SET title = ?, content = ?, edition_date = ?, tag = ? WHERE (id = ?)");
+        $prepare_pdo->execute(array($title, $content, $date, $tag, $id));
     }
 
     public function deleteArticle($id){
