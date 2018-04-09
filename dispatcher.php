@@ -60,7 +60,16 @@ echo "dispatcher";
 					break;
 			}
 			break;
-		
+        case 'ArticlesController':
+            switch ($method) {
+                case 'viewSingleArticle':
+                    $articlesController->viewSingleArticle($url[2]);
+                    break;
+                case 'addComment':
+                    $articlesController->addComment($url[2], $_SESSION['id'], $url[3]);
+                    break;
+            }
+            break;
 		default:
             $usersController->viewLogin();
 			break;

@@ -32,7 +32,7 @@ class Article
         $prepared_pdo = $GLOBALS['pdo']->prepare('SELECT * FROM articles WHERE id = ?');
         $prepared_pdo->execute(array($id));
         $article = $prepared_pdo->fetchAll(PDO::FETCH_ASSOC);
-        $author = $this->user->displaySingleUserByID($id);
+        $author = $this->user->displaySingleUserByID($article[0]['author']);
         $article[0]['author'] = $author[0]['username'];
         return $article;
     }
