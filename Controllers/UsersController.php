@@ -108,19 +108,27 @@ class UsersController{
         $password = $this->secure_input($password);
         if ($email != '' && $password != '') {
             if ($this->checkEmailFormat($email) && $this->checkEmailExist($email) == true) {
-                if ($this->checkPassword($password, $email)) {
-                	$data = $this->checkSingleUser($email);
-                	Sessions::Write($data);
-                  header('Location: ?url=UsersController/viewHome');
+                if ($this->checkStatus($email) == true) {
+                    if ($this->checkPassword($password, $email)) {
+                        $data = $this->checkSingleUser($email);
+                        Sessions::Write($data);
+                        header('Location: ?url=UsersController/viewHome');
+                }else {
+                        $this->viewLogin();
+                        echo "wrong password";
 
-                } else {
-                    echo "wrong password";
+                }
+                }else {
+                    $this->viewLogin();
+                    echo "Dear user, you are banned";
                 }
             }else {
+                $this->viewLogin();
                 echo "email doesn't exist";
             }
 
         } else {
+            $this->viewLogin();
             echo "Please fill all the input";
         }
     }
@@ -272,7 +280,7 @@ class UsersController{
 
     public function viewHome() {
 	    if (Sessions::Read("username") != null && Sessions::Read("status") == 'clean') {
-        include_once (dirname(__FILE__) . '/../Views/Layouts/home.tpl');
+        include_once (dirname(__FILE__) . '/../Views/Layouts/home.php');
     } else {
             include_once (dirname(__FILE__) . '/../Views/Layouts/login.tpl');
         }

@@ -53,6 +53,3 @@ class Comments
         return $comments;
     }
 }
-
-$comment = new Comments();
-var_dump($comment->getAllCommentsByUser(2));

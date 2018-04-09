@@ -63,6 +63,12 @@ echo "dispatcher";
 
 		case 'ArticlesController':
 			switch ($method) {
+       case 'viewSingleArticle':
+          $articlesController->viewSingleArticle($url[2]);
+          break;
+        case 'addComment':
+          $articlesController->addComment($url[2], $_SESSION['id'], $url[3]);
+          break;
 				case 'addArticleController':
 					$articleController->addArticleController($url[2], $url[3], $url[4], $url[5]);
 					break;
@@ -73,14 +79,6 @@ echo "dispatcher";
 					$articleController->viewEditArticle($url);
 					break;
 				case 'editArticleController':
-					echo "<br>";
-					echo $url[2];
-					echo "<br>";
-					echo $url[3];
-					echo "<br>";
-					echo $url[4];
-					echo "<br>";
-					echo $url[5];
 					$articleController->editArticleController($url[2], $url[3], $url[4], $url[5]);
 					break;
 				default:
@@ -88,7 +86,6 @@ echo "dispatcher";
 					break;
 			}
 			break;
-
 		default:
             $usersController->viewLogin();
 			break;
