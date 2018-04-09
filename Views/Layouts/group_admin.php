@@ -2,7 +2,7 @@
 session_start();
 include_once (dirname(__FILE__) . '/../../Config/core.php');
 $usersController = UsersController::getInstance();
-$articleController = ArticleControllers::getInstance(); 
+$articlesController = ArticlesController::getInstance(); 
 
 ?>
 
@@ -34,7 +34,7 @@ $usersController->viewUsers();
 
 <h3> Edit Articles </h3>
 <?php 
-$articleController->viewArticles('creation_date');
+$articlesController->viewArticles('creation_date');
 ?>
 <button class="editArticle">Edit article</button>
 
@@ -96,7 +96,7 @@ $articleController->viewArticles('creation_date');
 
 <h3> Edit your articles</h3>
 <?php
-$articleController->viewArticlesAuthor($_SESSION['id']);
+$articlesController->viewArticlesAuthor($_SESSION['id']);
 ?>
 <button id="editArticle2">Edit article</button>
 
